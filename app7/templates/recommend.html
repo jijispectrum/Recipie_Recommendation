@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommendations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'img/recom.jpg' %}"); /* Replace with the correct path to your image */
+            background-size: cover; /* Ensures the image covers the entire screen */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents repetition of the image */
+            color: #343a40; /* Text color for better readability */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: rgba(236, 224, 224, 0.9); /* Adds a white overlay with transparency */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h3 {
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        /* Card Styles */
+        .card {
+            display: flex;
+            flex-direction: row;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            width: 40%;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px;
+        }
+        .card-title {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .card-text {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column; /* Stacks content vertically on smaller screens */
+            }
+            .card-img-top {
+                width: 100%;
+                border-radius: 10px 10px 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        {% if user.is_authenticated %}
+            <h1>Recipe Recommendation System</h1>
+
+            <!-- Form to input ingredients -->
+            <form method="get" action="{% url 'recommend_recipes' %}">
+                <div class="form-group">
+                    <label for="ingredients">Enter Ingredients (separated by commas):</label>
+                    <input type="text" class="form-control" id="ingredients" name="ingredients" placeholder="e.g., chicken, garlic, olive oil" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Get Recipe Recommendations</button>
+            </form>
+
+            <!-- Displaying recommended recipes -->
+            {% if recommended_recipes %}
+                <h3 class="mt-5">Top 5 Recommended Recipes:</h3>
+                <div class="row">
+                    {% for recipe in recommended_recipes %}
+                        <div class="col-md-12">
+                            <div class="card">
+                                <!-- <img class="card-img-top" src="{{ recipe.image_name }}" alt="{{ recipe.title }}"> -->
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ recipe.title }}</h5>
+                                    <p class="card-text"><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+                                    <p class="card-text"><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="mt-4">No recommendations found. Please enter some ingredients to get recommendations.</p>
+            {% endif %}
+        {% else %}
+            <h2>You need to be logged in to view recipe recommendations.</h2>
+            <p>Please <a href="{% url 'login_page' %}">login</a> to access this page.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

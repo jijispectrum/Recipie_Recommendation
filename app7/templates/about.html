@@ -1,0 +1,43 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href=" {% static 'scss/about.css' %}">
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+        <p>Your go-to app for delicious recipes!</p>
+    </header>
+    <main>
+        <section id="mission">
+            <h2>Our Mission</h2>
+            <p>At Recipe Recommendations, we aim to inspire home cooks by providing easy and delicious recipes that everyone can enjoy.</p>
+        </section>
+
+        <section id="who-we-are">
+            <h2>Who We Are</h2>
+            <p>We are a passionate team of culinary enthusiasts dedicated to inspiring home cooks everywhere. Our goal is to provide a platform for discovering and sharing delicious recipes that everyone can enjoy. Join us on this flavorful journey!</p>
+        </section>
+        
+
+        <section id="join-us">
+            <h2>Join Our Community</h2>
+            <p>We invite you to explore delicious recipes, share your own, and become part of our culinary family!</p>
+            <button id="join-button">Join Us</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Recipe Recommendations</p>
+    </footer>
+
+    <script>
+        document.getElementById('join-button').addEventListener('click', function() {
+            alert('Thank you for joining our community!');
+        });
+    </script>
+</body>
+</html>

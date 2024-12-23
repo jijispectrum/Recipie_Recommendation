@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Responsive Design</title>
+  
+  <!-- Link to Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  
+  <!-- Internal CSS -->
+  <style>
+    /* Importing Google Fonts - Poppins */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 15px;
+      background-image: url("{% static 'img/login.jpg' %}"); 
+      overflow: hidden;
+      background-size: cover; 
+      background-position: center; 
+      color: rgb(86, 75, 75); /* Text color for readability */
+      margin: 0; /* Remove default body margin */
+    }
+
+    .wrapper {
+      max-width: 500px;
+      width: 100%;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper .title {
+      height: 120px;
+      background: #7c7f7e;
+      border-radius: 5px 5px 0 0;
+      color: #fff;
+      font-size: 30px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper form {
+      padding: 25px 35px;
+    }
+
+    .wrapper form .row {
+      margin-top: 15px;
+      position: relative;
+    }
+
+    .wrapper form .row input {
+      width: 100%;
+      padding: 12px 40px;
+      border-radius: 5px;
+      border: 1px solid lightgrey;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    form .row input:focus {
+      border-color: #16a085;
+    }
+
+    form .row input::placeholder {
+      color: #dcd2d2;
+    }
+
+    .wrapper form .row i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #16a085;
+      font-size: 18px;
+    }
+
+    .wrapper form .pass {
+      margin-top: 10px;
+    }
+
+    .wrapper form .pass a {
+      color: #16a085;
+      font-size: 15px;
+      text-decoration: none;
+    }
+
+    .wrapper form .pass a:hover {
+      text-decoration: underline;
+    }
+
+    .wrapper form .button input {
+      margin-top: 20px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: bold;
+      background: #16a085;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    form .button input:hover {
+      background: #12876f;
+    }
+
+    .wrapper form .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+
+    .wrapper form .signup-link a {
+      color: #16a085;
+      text-decoration: none;
+    }
+
+    form .signup-link a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title"><span>LOG IN</span></div>
+    <form method="POST" action="{% url 'login_page' %}">
+      {% csrf_token %}
+      
+      <div class="row">
+        <i class="fas fa-envelope"></i>
+        <input type="text" name="username" placeholder="Username" required />
+        <!-- Optional: Display any error related to username -->
+        {% if form.username.errors %}
+          <div class="error-message">{{ form.username.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+      <div class="row">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password" placeholder="Password" required />
+        <!-- Optional: Display any error related to password -->
+        {% if form.password.errors %}
+          <div class="error-message">{{ form.password.errors|striptags }}</div>
+        {% endif %}
+      </div>
+      
+      <div class="row button">
+        <input type="submit" value="LOG IN" />
+      </div>
+
+      <div class="signup-link">
+        Not a member? <a href="{% url 'register_page' %}">Sign up now</a>
+      </div>
+
+      {% if error %}
+        <div class="error-message">{{ error }}</div>
+      {% endif %}
+    </form>
+  </div>
+</body>
+</html>
